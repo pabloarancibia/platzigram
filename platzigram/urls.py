@@ -13,7 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+"""Platzigram URLs module."""
+
+# Django
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 
 from platzigram import views as local_views
@@ -21,10 +26,13 @@ from posts import views as posts_views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hello-world/', local_views.hello_world),
-    path ('sort/', local_views.sort),
-    path('hi/<str:name>/<int:age>/',local_views.say_hi),
 
-    path ('posts/', posts_views.list_posts)
-]
+    path('admin/', admin.site.urls),
+
+    path('hello-world/', local_views.hello_world),
+    path('sorted/', local_views.sort),
+    path('hi/<str:name>/<int:age>/', local_views.say_hi),
+
+    path('posts/', posts_views.list_posts),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
